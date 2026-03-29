@@ -39,6 +39,20 @@ public class SimulationService {
         return getCurrentState();
     }
 
+    public List<WorldState> processSteps(int steps) {
+        if (mainWorld == null) init(new HashMap<>());
+        int count = Math.min(steps, 50);
+        List<WorldState> results = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            World tempWorld = new World();
+            mainWorld.creepersAndBacteriaAction(mainWorld, tempWorld);
+            addNewBornOrganismsToMainWorldCellules(mainWorld, tempWorld);
+            tack++;
+            results.add(getCurrentState());
+        }
+        return results;
+    }
+
     public WorldState getCurrentState() {
         if (mainWorld == null) init(new HashMap<>());
         long currentTotalBact = 0;

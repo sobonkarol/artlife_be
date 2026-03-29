@@ -4,6 +4,7 @@ import org.example.artlife_be.model.WorldState;
 import org.example.artlife_be.model.SimulationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,6 +22,11 @@ public class SimulationController {
     @GetMapping("/next")
     public WorldState getNextStep() {
         return simService.processNextStep();
+    }
+
+    @GetMapping("/next/{steps}")
+    public List<WorldState> getNextSteps(@PathVariable int steps) {
+        return simService.processSteps(steps);
     }
 
     // Nowy endpoint do natychmiastowego odświeżania widoku
